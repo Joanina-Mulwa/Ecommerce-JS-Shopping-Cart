@@ -44,7 +44,7 @@ body{
 
 .main{
     min-height: calc(100vh - 100px);
-    background: url("BlackSnowBoots.jpg") center/cover no-repeat;
+    background: url("./images/BlackSnowBoots.jpg") center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,7 +135,7 @@ body{
 }
 
 .bag-btn:hover{
-    background: transparent;
+    background: blue;
     color: black;
 }
 

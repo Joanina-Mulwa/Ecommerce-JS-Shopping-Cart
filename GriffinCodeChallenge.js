@@ -17,13 +17,13 @@ class Products{
 
     async getProducts(){
         try {
-            let result = await fetch('products.json');
+            let result = await fetch('GriffinCodeChallenge.json');
             let data = await result.json();
             let products = data.items;
-            products = products.map(item => {
-                const {title,price}= item.fields
-                const {id} = item.sys
-                const image = item.fields.image.fields.file.url
+            products = products.map(items => {
+                const {title,price}= items.fields
+                const id = items.sys
+                const image = items.fields.image.fields.file.url
                 return {title,price,id,image}
 
             })
@@ -75,7 +75,7 @@ class storage{
 //action listener
 document.addEventListener("DOMContentLoaded", ()=>{
 
-    const UI = new UI();
+    const ui = new UI();
     const products = new Products();
 
     //get all products
