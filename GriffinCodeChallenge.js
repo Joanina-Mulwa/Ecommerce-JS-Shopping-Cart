@@ -57,7 +57,7 @@ displayProducts(products){
                 <img src=${product.image} alt="product" class="product-img">
                 <button class="bag-btn" data-id=${product.id}>
                     <i class="fas fa-shopping-cart"></i>
-                    add to cart
+                    ADD TO CART!
                 </button>
             </div>
             <h2>${product.id}</h2>
@@ -77,12 +77,12 @@ getBagButtons(){
         let id = button.dataset.id;
         let inCart = cart.find(item => item.id == id);
         if(inCart){
-            button.innerText = "In Cart";
+            button.innerText = "Done! In Cart";
             button.disabled = true;
         }
         
             button.addEventListener("click" ,(event)=>{
-                event.target.innerText = "In Cart";
+                event.target.innerText = "Done! In Cart";
                 event.target.disabled = true;
                 //get product from products
                 let cartItem = {...Storage.getProduct(id),
@@ -155,6 +155,33 @@ hideCart(){
     cartDOM.classList.remove("showCart");
 
 }
+cartLogic(){
+    clearCartBtn.addEventListener("click", () => {this.clearCart();
+     });
+}
+clearCart(){
+    let cartItems = cart.map(item => item.id);
+    cartItems.forEach(id => this.removeItem(id));
+    while(cartContent.children.length>0){
+        cartContent.removeChild(cartContent.children[0])
+    }
+    this.hideCart();
+
+}
+removeItem(id){
+    cart = cart.filter(item => item.id !==id);
+    this.setCartValues(cart);
+    Storage.saveCart(cart);
+    let button = this.getSingleButton(id);
+    button.disabled = false;
+    button.innerHTML = `<i class="fas fa-shopping-cart"></i>ADD TO CART!`;
+}
+getSingleButton(id){
+    return buttonsDOM.find(button => button.dataset.id == id);
+    
+}
+
+
 }
 
 //local storage
@@ -191,6 +218,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     Storage.saveProducts(products);
   }).then(() => {
       ui.getBagButtons();
+      ui.cartLogic();
 
   });
 });
