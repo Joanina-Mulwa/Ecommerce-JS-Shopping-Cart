@@ -3,19 +3,19 @@
 {
         "sys":{ "id": "1"},
         "fields":{
-            "title": "Black Snow Boots",
+            "title": "Pink Snow Boots",
             "price": 10.99,
             "image": {"fields": { "file":{
-            "url": "./images/BlackSnowBoots.jpg"} } }
+            "url": "./images/PinkSnowBoots.jpg"} } }
         }
 },
 {
     "sys":{ "id": "2"},
     "fields":{
-        "title": "Pink Snow Boots",
+        "title": "Black Snow Boots",
         "price": 10.00,
         "image": {"fields": { "file": {
-        "url": "./images/PinkSnowBoots.jpg"} } }
+        "url": "./images/BlackSnowBoots.jpg"} } }
     }
 },
 {
@@ -48,10 +48,55 @@
 {
     "sys":{ "id": "6"},
     "fields":{
+        "title": "Fashion Baby Doll Shoes",
+        "price": 20.99,
+        "image": {"fields": { "file": {
+        "url": "./images/FashionPrewalkerBabyDoll.jpg"} } }
+    }
+},
+{
+    "sys":{ "id": "7"},
+    "fields":{
+        "title": "Winter Boots",
+        "price": 20.99,
+        "image": {"fields": { "file": {
+        "url": "./images/WinterBoots.jpg"} } }
+    }
+},
+{
+    "sys":{ "id": "8"},
+    "fields":{
+        "title": "Pink Prewalker Boots",
+        "price": 20.99,
+        "image": {"fields": { "file": {
+        "url": "./images/PinkPrewalkerBoots.jpg"} } }
+    }
+},
+{
+    "sys":{ "id": "9"},
+    "fields":{
+        "title": "Green Men Shoes",
+        "price": 20.99,
+        "image": {"fields": { "file": {
+        "url": "./images/GreenMenShoes.jpeg"} } }
+    }
+},
+{
+    "sys":{ "id": "10"},
+    "fields":{
         "title": "Millitary Boots",
         "price": 20.99,
         "image": {"fields": { "file": {
         "url": "./images/MilittaryBoots.jpg"} } }
+    }
+},
+{
+    "sys":{ "id": "11"},
+    "fields":{
+        "title": "Baby Shoes",
+        "price": 20.99,
+        "image": {"fields": { "file": {
+        "url": "./images/shoes.jpg"} } }
     }
 }
 

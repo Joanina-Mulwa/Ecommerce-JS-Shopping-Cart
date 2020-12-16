@@ -25,10 +25,10 @@ class Products{
             let data = await result.json();
             let products = data.items;
             products = products.map(items => {
-                const {title,price}= items.fields
-                const id = items.sys
-                const image = items.fields.image.fields.file.url
-                return {title,price,id,image}
+                const {title,price}= items.fields;
+                const {id} = items.sys;
+                const image = items.fields.image.fields.file.url;
+                return {title,price,id,image};
 
             })
 
@@ -55,11 +55,12 @@ displayProducts(products){
         <article class="product">
             <div class="img-container">
                 <img src=${product.image} alt="product" class="product-img">
-                <button class="bag-btn" data-id="${product.id}">
+                <button class="bag-btn" data-id=${product.id}>
                     <i class="fas fa-shopping-cart"></i>
                     add to cart
                 </button>
             </div>
+            <h2>${product.id}</h2>
             <h3>${product.title}</h3>
             <h4>$${product.price}</h4>
         </article>
@@ -84,7 +85,7 @@ getBagButtons(){
                 event.target.innerText = "In Cart";
                 event.target.disabled = true;
                 //get product from products
-                let cartItem = {...Storage.getProducts(id),
+                let cartItem = {...Storage.getProduct(id),
                 amount: 1 };
                 //add product to cart 
                 cart = [...cart,cartItem];
@@ -137,6 +138,23 @@ showCart(){
 
 }
 
+setupAPP(){
+    cart = Storage.getCart();
+    this.setCartValues(cart);
+    this.populateCart(cart);
+    cartBtn.addEventListener("click", this.showCart);
+    closeCartBtn.addEventListener("click", this.hideCart);
+}
+
+populateCart(cart){
+    cart.forEach(item =>this.addCartItem(item));
+}
+
+hideCart(){
+    cartOverLay.classList.remove("transparentBcg");
+    cartDOM.classList.remove("showCart");
+
+}
 }
 
 //local storage
@@ -144,12 +162,15 @@ class Storage{
     static saveProducts(products){
         localStorage.setItem("products",JSON.stringify(products));
     }
-    static getProducts(id){
+    static getProduct(id){
         let products = JSON.parse(localStorage.getItem("products"));
         return products.find(product => product.id == id)
     }
     static saveCart(cart){
         localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    static getCart(){
+        return localStorage.getItem("cart")?JSON.parse(localStorage.getItem("cart")):[];
     }
 
 
@@ -160,6 +181,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     const ui = new UI();
     const products = new Products();
+
+    //setpApp
+    ui.setupAPP();
 
     //get all products
     products.getProducts().then(products => {
