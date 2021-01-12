@@ -85,7 +85,7 @@
     "sys":{ "id": "10"},
     "fields":{
         "title": "Millitary Boots",
-        "price": 20.99,
+        "price": 20.00,
         "image": {"fields": { "file": {
         "url": "./images/MilittaryBoots.jpg"} } }
     }

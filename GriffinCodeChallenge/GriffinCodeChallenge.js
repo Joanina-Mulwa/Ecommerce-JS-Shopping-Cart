@@ -1,9 +1,13 @@
+/*
+
 const client = contentful.createClient({
     // This is the space ID. A space is like a project folder in Contentful terms
     space: "s6j8mkpbempu",
     // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
     accessToken: "lnKbyLdprsQeAJddgc79BrFWPzq1K9GNjC4g0o9nP8M"
   });
+  
+  */
 
 //variables
 const cartBtn = document.querySelector('.cart-btn');
@@ -30,10 +34,14 @@ class Products{
     async getProducts(){
         try {
 
-//let contentful = await client.getEntries({
+/*
+
+let contentful = await client.getEntries({
     //content_type: "griffinCodeChallengeProducts"
-//});
-        //let products = contentful.items;
+});
+        let products = contentful.items;
+
+*/
 
 
 
@@ -123,23 +131,84 @@ getBagButtons(){
 setCartValues(cart){
     let tempTotal = 0;
     let itemsTotal = 0;
+    
+    
     cart.map(item => {
         tempTotal += item.price * item.amount;
         itemsTotal += item.amount;
+        
 
     });
 
+    
+    
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
+    
 
 }
 addCartItem(item){
+
+    let tempTotal = 0;
+    let itemsTotal = 0;
+    var lineTotal;
+    var discount;
+    var lineGrandTotal;
+    var grandTotal = 0;
+
+    tempTotal += item.price * item.amount;
+    itemsTotal += item.amount;
+    
+
+    
+        if (item.amount>=10 && item.amount<=25)
+        {
+            lineTotal = itemsTotal * item.price;
+            discount = 0.1 * itemsTotal;
+            lineGrandTotal = lineTotal - discount;
+            
+            
+        }
+        else if (item.amount>=26 && item.amount<=50)
+        {
+            lineTotal = itemsTotal * item.price;
+            discount = 0.25 * itemsTotal;
+            lineGrandTotal = lineTotal - discount; 
+           
+            
+        }
+        else if (item.amount>=51)
+        {
+            lineTotal = itemsTotal * item.price;
+            discount = 0.5 * itemsTotal;
+            lineGrandTotal = lineTotal - discount;  
+            
+        }
+        else
+        {
+            lineTotal = itemsTotal * item.price;
+            discount = 0;
+            lineGrandTotal = lineTotal;
+          
+        }
+
+        grandTotal += lineGrandTotal;
+
+        
+        cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(4));
+    
     const div = document.createElement("div");
     div.classList.add("cart-item");
     div.innerHTML = ` <img src=${item.image} alt="no image" />
     <div>
         <h4>${item.title}</h4>
-        <h5>$${item.price}</h5>
+        <h5>Price: $${item.price}</h5>
+        Line Total: $${lineTotal}
+        </br>
+        Discount: $${discount}
+        </br>
+        Line Grand Total: $${lineGrandTotal}
+        </br>
         <span class="remove-item" data-id=${item.id}>remove</span>
     </div>
     <div>
