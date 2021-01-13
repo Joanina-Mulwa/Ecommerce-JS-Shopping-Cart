@@ -16,6 +16,9 @@ const clearCartBtn = document.querySelector('.clear-cart');
 const cartDOM= document.querySelector('.cart');
 const cartOverLay = document.querySelector('.cart-overlay');
 const cartItems = document.querySelector('.cart-items');
+const linetotal = document.querySelector('.line-Total');
+const linediscount = document.querySelector('.line-Discount');
+const linegrandtotal = document.querySelector('.line-Grand-Total');
 const cartTotal = document.querySelector('.cart-total');
 const cartGrandTotal = document.querySelector('.cart-grandTotal');
 const cartContent = document.querySelector('.cart-content');
@@ -131,83 +134,112 @@ getBagButtons(){
 setCartValues(cart){
     let tempTotal = 0;
     let itemsTotal = 0;
+
+    var lineTotal=0;
+    var discount=0;
+    var lineGrandTotal=0;
+    var grandTotal = 0;
+    var cutoff;
     
     
     cart.map(item => {
         tempTotal += item.price * item.amount;
         itemsTotal += item.amount;
         
+            if (item.amount>=10 && item.amount<=25)
+            {
+                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                discount = parseFloat(item.amount.toFixed(2)) * 0.1;
+                lineGrandTotal = lineTotal - discount;
+                cutoff = 0.1;
+                
+            }
+            else if (item.amount>=26 && item.amount<=50)
+            {
+                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                discount = parseFloat(item.amount.toFixed(2)) * 0.25;
+                lineGrandTotal = lineTotal - discount; 
+                cutoff = 0.25;
+                
+            }
+            else if (item.amount>=51)
+            {
+                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                discount = parseFloat(item.amount.toFixed(2)) * 0.5;
+                lineGrandTotal = lineTotal - discount; 
+                cutoff = 0.5; 
+    
+            }
+            else
+            {
+                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                discount = 0;
+                lineGrandTotal = lineTotal;
+                cutoff = 0;
+       
+            }
 
+             
+            grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+     
     });
 
-    
-    
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
-    
+    cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(2));
 
 }
 addCartItem(item){
 
-    let tempTotal = 0;
-    let itemsTotal = 0;
-    var lineTotal;
-    var discount;
-    var lineGrandTotal;
-    var grandTotal = 0;
-
-    tempTotal += item.price * item.amount;
-    itemsTotal += item.amount;
-    
-
-    
+        var lineTotal=0;
+        var discount=0;
+        var lineGrandTotal=0;
+        var cutoff;
+        
         if (item.amount>=10 && item.amount<=25)
         {
-            lineTotal = itemsTotal * item.price;
-            discount = 0.1 * itemsTotal;
-            lineGrandTotal = lineTotal - discount;
-            
+            lineTotal =parseFloat(item.amount.toFixed(2)) * item.price;
+            discount = parseFloat(item.amount.toFixed(2)) * 0.1;
+            lineGrandTotal = lineTotal - discount; 
+            cutoff = 0.1; 
             
         }
         else if (item.amount>=26 && item.amount<=50)
         {
-            lineTotal = itemsTotal * item.price;
-            discount = 0.25 * itemsTotal;
+            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+            discount = parseFloat(item.amount.toFixed(2)) * 0.25;
             lineGrandTotal = lineTotal - discount; 
-           
+            cutoff = 0.25;
             
         }
         else if (item.amount>=51)
         {
-            lineTotal = itemsTotal * item.price;
-            discount = 0.5 * itemsTotal;
+            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+            discount = parseFloat(item.amount.toFixed(2)) * 0.5;
             lineGrandTotal = lineTotal - discount;  
-            
+            cutoff = 0.5;
+
         }
         else
         {
-            lineTotal = itemsTotal * item.price;
+            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
             discount = 0;
             lineGrandTotal = lineTotal;
-          
+            cutoff = 0;
+            
         }
-
-        grandTotal += lineGrandTotal;
-
-        
-        cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(4));
-    
+   
     const div = document.createElement("div");
     div.classList.add("cart-item");
     div.innerHTML = ` <img src=${item.image} alt="no image" />
     <div>
         <h4>${item.title}</h4>
-        <h5>Price: $${item.price}</h5>
-        Line Total: $${lineTotal}
+        <h5>Price: $ ${item.price}</h5>
+        Line Total: <span class ="line-Total"></span>  $ ${lineTotal}
         </br>
-        Discount: $${discount}
+        Discount: <span class ="line-Discount"></span> $ ${discount}
         </br>
-        Line Grand Total: $${lineGrandTotal}
+        Line Grand Total: <span class ="line-Grand-Total"></span> $ ${lineGrandTotal}
         </br>
         <span class="remove-item" data-id=${item.id}>remove</span>
     </div>
@@ -217,6 +249,10 @@ addCartItem(item){
         <i class="fas fa-chevron-down" data-id=${item.id}></i>
     </div>`;
     cartContent.appendChild(div);
+
+    //linetotal.innerText = parseFloat(lineTotal.toFixed(2));
+
+    //document.getElementById("line-Total").innerHTML = lineTotal;
 
 }
 showCart(){
