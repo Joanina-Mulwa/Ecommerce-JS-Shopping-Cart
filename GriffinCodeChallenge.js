@@ -116,7 +116,7 @@ getBagButtons(){
                 event.target.disabled = true;
                 //get product from products
                 let cartItem = {...Storage.getProduct(id),
-                amount: 1 };
+                amount: 1,};
                 //add product to cart 
                 cart = [...cart,cartItem];
                 //save cart in local storage
@@ -139,7 +139,7 @@ setCartValues(cart){
 
     let lineTotal=0;
     let discount=0;
-    let lineGrandTotal=0;
+    let lineGrandTotal = 0;
     let grandTotal = 0;
     let cutoff;
     
@@ -148,28 +148,59 @@ setCartValues(cart){
         tempTotal += item.price * item.amount;
         itemsTotal += item.amount;
         
-            if (item.amount>=10 && item.amount<=25)
+            if (item.amount>=10 && item.amount<=25 || itemsTotal>=10 && itemsTotal<=25)
             {
-                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
-                discount = parseFloat(item.amount.toFixed(2)) * 0.1;
-                lineGrandTotal = lineTotal - discount;
-                cutoff = 0.1;
+                    if (item.amount>=10 && item.amount<=25)
+                        {
+                            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                            discount = parseFloat(item.amount.toFixed(2)) * 0.1;
+                            lineGrandTotal = lineTotal - discount;
+                            cutoff = 0.1;
+                            grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+                    }
+                    else if(itemsTotal>=10 && itemsTotal<=25)
+                        {
+                            discount += parseFloat(itemsTotal.toFixed(2)) * 0.1;
+                            cutoff = 0.1;
+                            grandTotal = (tempTotal-(itemsTotal * cutoff));
+                        }
+                
                 
             }
-            else if (item.amount>=26 && item.amount<=50)
+            else if (item.amount>=26 && item.amount<=50 || itemsTotal>=26 && itemsTotal<=50)
             {
-                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
-                discount = parseFloat(item.amount.toFixed(2)) * 0.25;
-                lineGrandTotal = lineTotal - discount; 
-                cutoff = 0.25;
+                    if (item.amount>=26 && item.amount<=50)
+                        {
+                            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                            discount = parseFloat(item.amount.toFixed(2)) * 0.25;
+                            lineGrandTotal = lineTotal - discount; 
+                            cutoff = 0.25;
+                            grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+                        }
+                    else if(itemsTotal>=26 && itemsTotal<=50)
+                        {
+                            discount = parseFloat(itemsTotal.toFixed(2)) * 0.25;
+                            cutoff = 0.25;
+                            grandTotal = (tempTotal-(itemsTotal * cutoff));
+                        }
                 
             }
-            else if (item.amount>=51)
+            else if (item.amount>=51 || itemsTotal>=51)
             {
-                lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
-                discount = parseFloat(item.amount.toFixed(2)) * 0.5;
-                lineGrandTotal = lineTotal - discount; 
-                cutoff = 0.5; 
+                    if (item.amount>=51)
+                        {
+                            lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
+                            discount = parseFloat(item.amount.toFixed(2)) * 0.5;
+                            lineGrandTotal = lineTotal - discount; 
+                            cutoff = 0.5; 
+                            grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+                        }
+                    else if(itemsTotal>=51)
+                        {
+                            discount = parseFloat(itemsTotal.toFixed(2)) * 0.5;
+                            cutoff = 0.5;
+                            grandTotal = (tempTotal-(itemsTotal * cutoff));
+                        }
     
             }
             else
@@ -178,11 +209,12 @@ setCartValues(cart){
                 discount = 0;
                 lineGrandTotal = lineTotal;
                 cutoff = 0;
+                grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
        
             }
-
+            
              
-            grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+            //grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
         });
      
     
@@ -196,13 +228,16 @@ setCartValues(cart){
 
 }
 addCartItem(item){
-
-        let lineTotal=0;
-        let discount=0;
-        let lineGrandTotal=0;
+    
+        let lineTotal;
+        let discount;
+        let lineGrandTotal;
         let cutoff;
-        
-        if (item.amount>=10 && item.amount<=25)
+        let itemsTotal;
+        itemsTotal += item.amount;
+ 
+       
+        if (item.amount>=10 && item.amount<=25 || itemsTotal>=10 && itemsTotal<=25)
         {
             lineTotal =parseFloat(item.amount.toFixed(2)) * item.price;
             discount = parseFloat(item.amount.toFixed(2)) * 0.1;
@@ -210,7 +245,7 @@ addCartItem(item){
             cutoff = 0.1; 
             
         }
-        else if (item.amount>=26 && item.amount<=50)
+        else if (item.amount>=26 && item.amount<=50 || itemsTotal>=26 && itemsTotal<=50)
         {
             lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
             discount = parseFloat(item.amount.toFixed(2)) * 0.25;
@@ -218,7 +253,7 @@ addCartItem(item){
             cutoff = 0.25;
             
         }
-        else if (item.amount>=51)
+        else if (item.amount>=51 || itemsTotal>=51)
         {
             lineTotal = parseFloat(item.amount.toFixed(2)) * item.price;
             discount = parseFloat(item.amount.toFixed(2)) * 0.5;
@@ -350,7 +385,7 @@ purchaseCart(){
     cartItems.forEach(id => this.removeItem(id));
     while(cartContent.children.length>0){
         cartContent.removeChild(cartContent.children[0])
-        alert('Thank you for or purchase');
+        alert('Thank you for your purchase');
     }
     this.hideCart();
 
