@@ -13,6 +13,7 @@ const client = contentful.createClient({
 const cartBtn = document.querySelector('.cart-btn');
 const closeCartBtn = document.querySelector('.close-cart');
 const clearCartBtn = document.querySelector('.clear-cart');
+const purchaseCartBtn = document.querySelector('.purchase-cart');
 const cartDOM= document.querySelector('.cart');
 const cartOverLay = document.querySelector('.cart-overlay');
 const cartItems = document.querySelector('.cart-items');
@@ -131,15 +132,16 @@ getBagButtons(){
         
     });
 }
+
 setCartValues(cart){
     let tempTotal = 0;
     let itemsTotal = 0;
 
-    var lineTotal=0;
-    var discount=0;
-    var lineGrandTotal=0;
-    var grandTotal = 0;
-    var cutoff;
+    let lineTotal=0;
+    let discount=0;
+    let lineGrandTotal=0;
+    let grandTotal = 0;
+    let cutoff;
     
     
     cart.map(item => {
@@ -181,20 +183,24 @@ setCartValues(cart){
 
              
             grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
+        });
      
-    });
+    
 
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
     cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(2));
 
+    //linetotal.innerHTML = parseFloat((item.amount * item.price).toFixed(2));
+    //taxAmount = parseInt(subtotal * taxes);
+
 }
 addCartItem(item){
 
-        var lineTotal=0;
-        var discount=0;
-        var lineGrandTotal=0;
-        var cutoff;
+        let lineTotal=0;
+        let discount=0;
+        let lineGrandTotal=0;
+        let cutoff;
         
         if (item.amount>=10 && item.amount<=25)
         {
@@ -228,14 +234,15 @@ addCartItem(item){
             cutoff = 0;
             
         }
-   
+        
+        
     const div = document.createElement("div");
     div.classList.add("cart-item");
     div.innerHTML = ` <img src=${item.image} alt="no image" />
     <div>
         <h4>${item.title}</h4>
         <h5>Price: $ ${item.price}</h5>
-        Line Total: <span class ="line-Total"></span>  $ ${lineTotal}
+        Line Total: <span class ="line-Total" id="demo"></span>  $ ${lineTotal}
         </br>
         Discount: <span class ="line-Discount"></span> $ ${discount}
         </br>
@@ -280,6 +287,9 @@ hideCart(){
 }
 cartLogic(){
     clearCartBtn.addEventListener("click", () => {this.clearCart();
+
+     });
+    purchaseCartBtn.addEventListener("click", () => {this.purchaseCart();
 
      });
      cartContent.addEventListener("click", event => {
@@ -330,6 +340,17 @@ clearCart(){
     cartItems.forEach(id => this.removeItem(id));
     while(cartContent.children.length>0){
         cartContent.removeChild(cartContent.children[0])
+    }
+    this.hideCart();
+
+}
+purchaseCart(){
+    
+    let cartItems = cart.map(item => item.id);
+    cartItems.forEach(id => this.removeItem(id));
+    while(cartContent.children.length>0){
+        cartContent.removeChild(cartContent.children[0])
+        alert('Thank you for or purchase');
     }
     this.hideCart();
 
