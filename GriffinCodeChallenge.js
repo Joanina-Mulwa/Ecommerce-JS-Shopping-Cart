@@ -5,7 +5,7 @@ if(inputText.value.match(mailformat))
 {
 alert('Valid email address!  THANKYOU FOR YOUR PURCHASE.  ORDER SENT TO THE EMAIL');
 
-window.location.href = "GriffinCodeChallenges.htmll";
+window.location.href = "GriffinCodeChallenge.html";
 //window.navigate("htmlfile.html")
 //window.location.href = "GriffinCodeChallenge.html";
 //return true;
