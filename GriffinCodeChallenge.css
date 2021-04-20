@@ -65,6 +65,7 @@ body{
 }
 
 .banner-btn{
+    position: sticky;
     padding: 1rem 3rem;
     text-transform: uppercase;
     font-size: 1rem;
@@ -74,6 +75,7 @@ body{
     border: 1px solid black;
     transition: 0.3s linear;
     cursor: pointer; 
+    
 }
 
 .banner-btn:hover{
@@ -278,13 +280,53 @@ body{
 
 .cart-footer{
     margin-top: 2rem;
+    margin-bottom: 5rem;
     letter-spacing: 0.1rem;
     text-align: center;
+    position: sticky;
 }
 
 .cart-footer h3{
     text-transform: capitalize;
     margin-bottom: 1rem;
 }
+
+
+
+/*validate email*/
+
+li {
+list-style-type: none;
+font-size: 16pt;
+}
+.mail {
+margin: auto;
+padding-top: 10px;
+padding-bottom: 10px;
+width: 800px;
+background : #D8F1F8;
+border: 1px soild silver;
+}
+.mail h2 {
+margin-left: 38px;
+}
+input {
+font-size: 20pt;
+}
+.Text{
+    width: 600px;
+}
+input:focus, textarea:focus{
+background-color: lightyellow;
+
+}
+input submit {
+font-size: 12pt;
+}
+.rq {
+color: #FF0000;
+font-size: 10pt;
+}
+
 
 
