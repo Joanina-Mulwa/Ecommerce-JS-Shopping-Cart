@@ -1,3 +1,25 @@
+function ValidateEmail(inputText)
+{
+var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+if(inputText.value.match(mailformat))
+{
+alert('Valid email address!  THANKYOU FOR YOUR PURCHASE.  ORDER SENT TO THE EMAIL');
+
+window.location.href = "GriffinCodeChallenges.htmll";
+//window.navigate("htmlfile.html")
+//window.location.href = "GriffinCodeChallenge.html";
+//return true;
+}
+else
+{
+alert("You have entered an invalid email address!");
+document.form1.text1.focus();
+//return false;
+}
+}
+
+
+
 /*
 
 const client = contentful.createClient({
@@ -219,8 +241,9 @@ setCartValues(cart){
      
     
 
-    cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+    //cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
+    cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(2));
 
     //linetotal.innerHTML = parseFloat((item.amount * item.price).toFixed(2));
@@ -233,9 +256,11 @@ addCartItem(item){
         let discount;
         let lineGrandTotal;
         let cutoff;
+        let tempTotal = 0;
         let itemsTotal;
         itemsTotal += item.amount;
  
+        tempTotal += item.price * item.amount;
        
         if (item.amount>=10 && item.amount<=25 || itemsTotal>=10 && itemsTotal<=25)
         {
@@ -385,11 +410,16 @@ purchaseCart(){
     cartItems.forEach(id => this.removeItem(id));
     while(cartContent.children.length>0){
         cartContent.removeChild(cartContent.children[0])
-        alert('Thank you for your purchase');
+        this.hideCart();
+    alert('Thank you for your purchase');
+    window.location.href = "GriffinCodeChallengeValidation.html";
     }
-    this.hideCart();
+    
 
 }
+
+
+
 removeItem(id){
     cart = cart.filter(item => item.id !==id);
     this.setCartValues(cart);
@@ -444,3 +474,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   });
 });
+
+
