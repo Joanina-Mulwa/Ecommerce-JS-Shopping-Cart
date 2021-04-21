@@ -3,20 +3,93 @@
 <head>
 <meta charset="utf-8">
 <title>JavaScript form validation - checking email</title>  
-<link rel="stylesheet" href="GriffinCodeChallenge.css" type="text/css">   
+<link rel="stylesheet" href="GriffinCodeChallenge.css" type="text/css"> 
+<script src="GriffinCodeChallenge.js"></script>
+
+<script src=
+    "https://smtpjs.com/v3/smtp.js">
+  </script>
+  
+  <script type="text/javascript">
+    function sendEmail() {
+      Email.send({
+        Host: "smtp.gmail.com",
+        Username: "joaninasender@gmail.com",
+        Password: "Joaninahjeeyjeey1",
+        To : TextArea1.value,
+        From: "joaninasender@gmail.com",
+        Subject: "Your Order Made",
+        Body: "Hello, Here is your order again yeee !!",
+        
+      })
+        .then(function (message) {
+          alert("mail sent successfully!")
+          window.location.href = "GriffinCodeChallenge.html";
+        });
+    }
+
+
+    function ValidateEmail(inputText)
+{
+var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+if(inputText.value.match(mailformat))
+{
+
+    sendEmail();
+   // window.location.href = "GriffinCodeChallenge.html";
+    //return true;
+
+
+}
+    
+else
+{
+alert("You have entered an invalid email address!");
+document.form1.text1.focus();
+//return false;
+}
+}
+
+
+  </script>
+
 </head>
 <body>
-<div class="mail">
+
+
+
+  <form name="form1" method="post">
+    Enter your name:
+    <br>
+    <input id ="TextArea2" type="text"/>
+    <br>
+    Enter your email address:
+    <br>
+    <input id="TextArea1" type='email' class= "Text" name='text1'  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" runat="server" />
+    <br> <br>
+    
+      <input type="button" value="Send Email" 
+          onclick="ValidateEmail(document.form1.text1)" />
+    </form>
+
+
+
+<!--<div class="mail">
 <h2>Input an email and Submit</h2>
-<form name="form1" action="GriffinCodeChallenge.html"> 
+<form name="form1"  method="POST" action="GriffinCodeChallenge.html"> 
 <ul>
-<li><input type='text' class= "Text" name='text1'/></li>
-<li>&nbsp;</li>
-<li class="submit"><input type="submit" name="submit" value="Submit" onclick="ValidateEmail(document.form1.text1)"/></li>
+  <li>
+  <input id="TextArea1" type='text' class= "Text" name='text1' pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" runat="server"/>
+  </li>
+  <li>&nbsp;</li>
+  <li class="submit"><input type="button" name="submit" value="Submit" onclick="ValidateEmail()" />
+  </li>
 <li>&nbsp;</li>
 </ul>
 </form>
 </div>
-<script src="GriffinCodeChallenge.js"></script>
+-->
+
+
 </body>
 </html>
