@@ -52,6 +52,43 @@ const productsDOM = document.querySelector('.products-center');
 
 //cart
 let cart = [];
+/*//var myPurchase = localStorage.getItem('cart');
+       var order =  console.log(localStorage.getItem('cart'));
+       console.log(order);
+       var myOrder;
+       myOrder == order;
+       console.log(myOrder);
+       localStorage.setItem("bought", myOrder);
+
+       var x=localStorage.getItem("bought");
+       console.log(x);
+//var Order = myPurchase;
+//console.log(myPurchase);
+//console.log(Order);
+//localStorage.setItem("myOrders",Order);*/
+
+//var tester = localStorage.getItem('cart');
+//console.log(localStorage.cart);
+//var test = tester;
+
+                                    //var test = localStorage.cart;
+                                    //localStorage.setItem("bought", test); 
+
+/*......var x=localStorage.getItem("bought");
+var check = x;
+console.log(check);*/
+ 
+/*localStorage.setItem("order",check);
+var y=localStorage.getItem("order");
+var check2 = y;
+console.log(check2);*/
+
+/*var final = check2;
+window.localStorage.setItem("Produce", final);
+var z = window.localStorage.getItem("Produce");
+console.log(z);*/
+
+
 //buttons
 let buttonsDOM = [];
 
@@ -148,8 +185,9 @@ getBagButtons(){
                 this.setCartValues(cart);
                 //display card items
                 this.addCartItem(cartItem);
+                window.location.reload();
                 //show the cart
-                this.showCart();
+                //this.showCart();
 
             });
         
@@ -240,9 +278,7 @@ setCartValues(cart){
             //grandTotal += ((item.amount * item.price)-(item.amount * cutoff));
         });
      
-    
-
-    //cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+ //cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartGrandTotal.innerText = parseFloat(grandTotal.toFixed(2));
@@ -351,6 +387,7 @@ cartLogic(){
 
      });
     purchaseCartBtn.addEventListener("click", () => {this.purchaseCart();
+        
 
      });
      cartContent.addEventListener("click", event => {
@@ -450,7 +487,11 @@ class Storage{
         localStorage.setItem("cart", JSON.stringify(cart));
     }
     static getCart(){
+       // console.log(localStorage.getItem('cart'))
+       var test = localStorage.cart;
+localStorage.setItem("bought", test);
         return localStorage.getItem("cart")?JSON.parse(localStorage.getItem("cart")):[];
+        
     }
 
 
@@ -475,5 +516,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   });
 });
-
-
